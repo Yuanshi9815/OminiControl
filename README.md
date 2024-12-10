@@ -92,7 +92,7 @@ python -m src.gradio.gradio_app
   <img src='./assets/demo/dreambooth_res.jpg'/>
 </details>
 
-### Spaitally aligned control
+### Spatially aligned control
 1. **Image Inpainting** (Left: original image; Center: masked image; Right: filled image)
   - Prompt: *The Mona Lisa is wearing a white VR headset with 'Omini' written on it.*
     </br>
