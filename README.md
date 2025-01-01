@@ -9,6 +9,7 @@
 <a href="https://huggingface.co/spaces/Yuanshi/OminiControl"><img src="https://img.shields.io/badge/🤗_HuggingFace-Space-ffbd45.svg" alt="HuggingFace"></a>
 <a href="https://github.com/Yuanshi9815/Subjects200K"><img src="https://img.shields.io/badge/GitHub-Dataset-blue.svg?logo=github&" alt="GitHub"></a>
 <a href="https://huggingface.co/datasets/Yuanshi/Subjects200K"><img src="https://img.shields.io/badge/🤗_HuggingFace-Dataset-ffbd45.svg" alt="HuggingFace"></a>
+<a href="https://replicate.com/chenxwh/ominicontrol-subject"><img src="https://replicate.com/chenxwh/ominicontrol-subject/badge" alt="Replicate"></a>
 
 > **OminiControl: Minimal and Universal Control for Diffusion Transformer**
 > <br>
