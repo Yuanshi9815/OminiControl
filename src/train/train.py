@@ -10,6 +10,7 @@ from datasets import load_dataset
 from .data import (
     ImageConditionDataset,
     Subject200KDateset,
+    CartoonDateset
 )
 from .model import OminiModel
 from .callbacks import TrainingCallback
@@ -111,7 +112,17 @@ def main():
             drop_image_prob=training_config["dataset"]["drop_image_prob"],
         )
     else:
-        raise NotImplementedError
+        dataset = CartoonDateset(
+            data_valid,
+            condition_size=training_config["dataset"]["condition_size"],
+            target_size=training_config["dataset"]["target_size"],
+            image_size=training_config["dataset"]["image_size"],
+            padding=training_config["dataset"]["padding"],
+            condition_type=training_config["condition_type"],
+            drop_text_prob=training_config["dataset"]["drop_text_prob"],
+            drop_image_prob=training_config["dataset"]["drop_image_prob"],
+        )
+        # raise NotImplementedError
 
     print("Dataset length:", len(dataset))
     train_loader = DataLoader(

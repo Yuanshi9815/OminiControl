@@ -18,7 +18,7 @@ train:
 
   condition_type: "cartoon"
   dataset:
-    type: "subject"
+    type: "cartoon"
     condition_size: 1024
     target_size: 1024
     image_size: 1024
