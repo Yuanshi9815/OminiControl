@@ -113,7 +113,7 @@ def main():
         )
     else:
         dataset = CartoonDateset(
-            data_valid,
+            None,
             condition_size=training_config["dataset"]["condition_size"],
             target_size=training_config["dataset"]["target_size"],
             image_size=training_config["dataset"]["image_size"],
