@@ -261,9 +261,6 @@ class CartoonDateset(Dataset):
         return len(self.condition_files)
 
     def __getitem__(self, idx):
-        # If target is 0, left image is target, right image is condition
-        target = idx % 2
-        item = self.base_dataset[idx // 2]
 
         # Crop the image to target and condition
         condition_img = Image.open(self.condition_files[idx])
