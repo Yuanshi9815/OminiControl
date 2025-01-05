@@ -20,6 +20,7 @@ from .data import (
 from .model import OminiModel
 from .callbacks import TrainingCallback
 
+torch.set_float32_matmul_precision('medium')
 
 def get_rank():
     try:
