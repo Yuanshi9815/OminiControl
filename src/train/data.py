@@ -214,3 +214,89 @@ class ImageConditionDataset(Dataset):
             "position_delta": position_delta,
             **({"pil_image": [image, condition_img]} if self.return_pil_image else {}),
         }
+
+
+class CartoonDateset(Dataset):
+    def __init__(
+        self,
+        base_dataset,
+        condition_size: int = 1024,
+        target_size: int = 1024,
+        image_size: int = 1024,
+        padding: int = 0,
+        condition_type: str = "cartoon",
+        drop_text_prob: float = 0.1,
+        drop_image_prob: float = 0.1,
+        return_pil_image: bool = False,
+    ):
+        self.base_dataset = base_dataset
+        self.condition_size = condition_size
+        self.target_size = target_size
+        self.image_size = image_size
+        self.padding = padding
+        self.condition_type = condition_type
+        self.drop_text_prob = drop_text_prob
+        self.drop_image_prob = drop_image_prob
+        self.return_pil_image = return_pil_image
+
+        self.to_tensor = T.ToTensor()
+
+        self.condition_files = []
+        self.target_files = []
+
+        src_folders = ['data/boy_0', 'data/boy_0']
+        for folder_path in src_folders:
+            cond_folder = os.path.join(folder_path, 'condition')
+            target_folder = os.path.join(folder_path, 'target')
+
+            for f in os.listdir(cond_folder):
+                if not (os.path.isfile(os.path.join(cond_folder, f)) and f.lower().endswith(('.jpg', '.jpeg', '.png', '.gif'))):
+                    continue
+                self.condition_files.append(os.path.join(cond_folder, f))
+                self.target_files.append(os.path.join(target_folder, f))
+
+
+    def __len__(self):
+        return len(self.condition_files)
+
+    def __getitem__(self, idx):
+        # If target is 0, left image is target, right image is condition
+        target = idx % 2
+        item = self.base_dataset[idx // 2]
+
+        # Crop the image to target and condition
+        condition_img = Image.open(self.condition_files[idx])
+
+        # Get the target and condition image
+        target_image = Image.open(self.target_files[idx])
+
+        # Resize the image
+        condition_img = condition_img.resize(
+            (self.condition_size, self.condition_size)
+        ).convert("RGB")
+        target_image = target_image.resize(
+            (self.target_size, self.target_size)
+        ).convert("RGB")
+
+        # Get the description
+        description = "A cartoon in a white background"
+
+        # Randomly drop text or image
+        drop_text = random.random() < self.drop_text_prob
+        drop_image = random.random() < self.drop_image_prob
+        if drop_text:
+            description = ""
+        if drop_image:
+            condition_img = Image.new(
+                "RGB", (self.condition_size, self.condition_size), (0, 0, 0)
+            )
+
+        return {
+            "image": self.to_tensor(target_image),
+            "condition": self.to_tensor(condition_img),
+            "condition_type": self.condition_type,
+            "description": description,
+            # 16 is the downscale factor of the image
+            "position_delta": np.array([0, -self.condition_size // 16]),
+        }
+
