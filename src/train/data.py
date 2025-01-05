@@ -245,7 +245,7 @@ class CartoonDateset(Dataset):
         self.condition_files = []
         self.target_files = []
 
-        src_folders = ['data/boy_0', 'data/boy_0']
+        src_folders = ['data/boy_0', 'data/boy_1', 'data/girl_0', 'data/girl_1']
         for folder_path in src_folders:
             cond_folder = os.path.join(folder_path, 'condition')
             target_folder = os.path.join(folder_path, 'target')

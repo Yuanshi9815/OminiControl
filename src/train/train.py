@@ -7,6 +7,11 @@ import time
 
 from datasets import load_dataset
 
+
+from huggingface_hub import login
+
+login(token="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")
+
 from .data import (
     ImageConditionDataset,
     Subject200KDateset,
