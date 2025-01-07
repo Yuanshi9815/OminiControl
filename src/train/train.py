@@ -118,7 +118,7 @@ def main():
             drop_image_prob=training_config["dataset"]["drop_image_prob"],
         )
     else:
-        dataset = load_dataset("saquiboye/oye-cartoon", cache_dir=cache_dir, split="train")
+        dataset = load_dataset("saquiboye/oye-cartoon", split="train")
         dataset = CartoonDateset(
             dataset,
             condition_size=training_config["dataset"]["condition_size"],
