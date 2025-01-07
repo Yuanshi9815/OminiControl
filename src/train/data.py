@@ -244,7 +244,7 @@ class CartoonDataset(Dataset):
 
 
     def __len__(self):
-        return len(self.condition_files)
+        return len(self.base_dataset)
 
     def __getitem__(self, idx):
 
