@@ -283,7 +283,7 @@ class CartoonDataset(Dataset):
             "condition_type": self.condition_type,
             "description": description,
             # 16 is the downscale factor of the image
-            "position_delta": np.array([0, -self.condition_size // 32]),
+            "position_delta": np.array([0, -self.condition_size // 16]),
         }
 
 
