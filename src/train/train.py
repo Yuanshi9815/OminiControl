@@ -119,7 +119,7 @@ def main():
         )
     else:
         dataset = load_dataset("saquiboye/oye-cartoon", split="train")
-        dataset = CartoonDateset(
+        dataset = CartoonDataset(
             dataset,
             condition_size=training_config["dataset"]["condition_size"],
             target_size=training_config["dataset"]["target_size"],
