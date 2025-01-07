@@ -217,7 +217,7 @@ class ImageConditionDataset(Dataset):
         }
 
 
-class CartoonDateset(Dataset):
+class CartoonDataset(Dataset):
     def __init__(
         self,
         base_dataset,
@@ -242,31 +242,18 @@ class CartoonDateset(Dataset):
 
         self.to_tensor = T.ToTensor()
 
-        self.condition_files = []
-        self.target_files = []
-
-        src_folders = ['data/boy_0', 'data/boy_1', 'data/girl_0', 'data/girl_1']
-        for folder_path in src_folders:
-            cond_folder = os.path.join(folder_path, 'condition')
-            target_folder = os.path.join(folder_path, 'target')
-
-            for f in os.listdir(cond_folder):
-                if not (os.path.isfile(os.path.join(cond_folder, f)) and f.lower().endswith(('.jpg', '.jpeg', '.png', '.gif'))):
-                    continue
-                self.condition_files.append(os.path.join(cond_folder, f))
-                self.target_files.append(os.path.join(target_folder, f))
-
 
     def __len__(self):
         return len(self.condition_files)
 
     def __getitem__(self, idx):
 
+        data = self.base_dataset[idx]
         # Crop the image to target and condition
-        condition_img = Image.open(self.condition_files[idx])
+        condition_img = data['condition']
 
         # Get the target and condition image
-        target_image = Image.open(self.target_files[idx])
+        target_image = data['target']
 
         # Resize the image
         condition_img = condition_img.resize(
@@ -277,7 +264,7 @@ class CartoonDateset(Dataset):
         ).convert("RGB")
 
         # Get the description
-        description = "A cartoon in a white background"
+        description = data.get("description", "Photo of a cartoon character in a white background.")
 
         # Randomly drop text or image
         drop_text = random.random() < self.drop_text_prob
@@ -289,12 +276,14 @@ class CartoonDateset(Dataset):
                 "RGB", (self.condition_size, self.condition_size), (0, 0, 0)
             )
 
+
         return {
             "image": self.to_tensor(target_image),
             "condition": self.to_tensor(condition_img),
             "condition_type": self.condition_type,
             "description": description,
             # 16 is the downscale factor of the image
-            "position_delta": np.array([0, -self.condition_size // 16]),
+            "position_delta": np.array([0, self.condition_size // 32]),
         }
+
 

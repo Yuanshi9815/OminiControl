@@ -15,7 +15,7 @@ login(token="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")
 from .data import (
     ImageConditionDataset,
     Subject200KDateset,
-    CartoonDateset
+    CartoonDataset
 )
 from .model import OminiModel
 from .callbacks import TrainingCallback
@@ -118,8 +118,9 @@ def main():
             drop_image_prob=training_config["dataset"]["drop_image_prob"],
         )
     else:
+        dataset = load_dataset("saquiboye/oye-cartoon", cache_dir=cache_dir, split="train")
         dataset = CartoonDateset(
-            None,
+            dataset,
             condition_size=training_config["dataset"]["condition_size"],
             target_size=training_config["dataset"]["target_size"],
             image_size=training_config["dataset"]["image_size"],
