@@ -191,7 +191,7 @@ class TrainingCallback(L.Callback):
             test_list.append((condition_img, [0, -16], "A beautiful vase on a table."))
         elif condition_type == "cartoon":
             condition_img = (
-                Image.open("assets/cartoon_girl.webp")
+                Image.open("assets/cartoon_boy.png")
                 .resize((condition_size, condition_size))
                 .convert("RGB")
             )
