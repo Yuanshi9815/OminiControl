@@ -256,7 +256,7 @@ class CartoonDataset(Dataset):
         target_image = data['target']
 
         # Tag
-        tags = data['tags'][0]
+        tag = data['tags'][0]
 
         # Resize the image
         condition_img = condition_img.resize(
