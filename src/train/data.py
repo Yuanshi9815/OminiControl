@@ -255,6 +255,9 @@ class CartoonDataset(Dataset):
         # Get the target and condition image
         target_image = data['target']
 
+        # Tag
+        tags = data['tags'][0]
+
         # Resize the image
         condition_img = condition_img.resize(
             (self.condition_size, self.condition_size)
@@ -264,7 +267,7 @@ class CartoonDataset(Dataset):
         ).convert("RGB")
 
         # Get the description
-        description = data.get("description", "Photo of a cartoon character in a white background.")
+        description = data.get("description", f"Photo of a {tag} cartoon character in a white background.")
 
         # Randomly drop text or image
         drop_text = random.random() < self.drop_text_prob
