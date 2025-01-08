@@ -4,7 +4,7 @@
 # Specify the config file path
 export XFL_CONFIG=./train/config/cartoon_1024.yaml
 
-export HF_HUB_CACHE = ./cache
+export HF_HUB_CACHE=./cache
 
 # Specify the WANDB API key
 # export WANDB_API_KEY='YOUR_WANDB_API_KEY'
