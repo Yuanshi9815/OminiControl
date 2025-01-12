@@ -10,18 +10,18 @@ train:
   batch_size: 1
   accumulate_grad_batches: 1
   dataloader_workers: 5
-  save_interval: 1000
-  sample_interval: 100
-  max_steps: -1
+  save_interval: 100
+  sample_interval: 10
+  max_steps: 100
   gradient_checkpointing: false
   save_path: "runs"
 
   condition_type: "cartoon"
   dataset:
     type: "cartoon"
-    condition_size: 512
-    target_size: 512
-    image_size: 512
+    condition_size: 1024
+    target_size: 1024
+    image_size: 1024
     padding: 0
     drop_text_prob: 0.1
     drop_image_prob: 0.0
