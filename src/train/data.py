@@ -271,9 +271,9 @@ class CartoonDataset(Dataset):
             "owl": "owl like bird",
             "woman": "woman",
             "parrot": "parrot like bird",
-            "mouse": "mouse like animal
+            "mouse": "mouse like animal",
             "man": "man",
-            "pigeon": "pigeon like bird"
+            "pigeon": "pigeon like bird",
             "girl": "girl",
             "panda": "panda like animal",
             "crocodile": "crocodile like animal",
