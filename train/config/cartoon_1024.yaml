@@ -8,11 +8,11 @@ model:
 
 train:
   batch_size: 1
-  accumulate_grad_batches: 1
-  dataloader_workers: 5
-  save_interval: 1000
-  sample_interval: 100
-  max_steps: 15000
+  accumulate_grad_batches: 4
+  dataloader_workers: 8
+  save_interval: 250
+  sample_interval: 50
+  max_steps: 5000
   gradient_checkpointing: false
   save_path: "runs"
 
@@ -38,7 +38,7 @@ train:
   optimizer:
     type: "Prodigy"
     params:
-      lr: 1
+      lr: 4
       use_bias_correction: true
       safeguard_warmup: true
       weight_decay: 0.01
