@@ -10,9 +10,9 @@ train:
   batch_size: 1
   accumulate_grad_batches: 4
   dataloader_workers: 8
-  save_interval: 250
-  sample_interval: 50
-  max_steps: 5000
+  save_interval: 500
+  sample_interval: 100
+  max_steps: 15000
   gradient_checkpointing: false
   save_path: "runs"
 
