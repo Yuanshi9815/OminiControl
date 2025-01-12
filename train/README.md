@@ -79,17 +79,17 @@ You can customize your own task by constructing a new dataset and modifying the 
                 "position_delta": position_delta
             }
     ```
-    **Note:** For spatial control tasks, set the `position_delta` to be `[0, 0]`. For non-spatial control tasks, set `position_delta` to be `[0, condition_width // 16]`.
+    **Note:** For spatial control tasks, set the `position_delta` to be `[0, 0]`. For non-spatial control tasks, set `position_delta` to be `[0, -condition_width // 16]`.
 2. **Condition**:
    
-   Add a new condition type in the `Condition` class. (`src/train/data.py`)
+   Add a new condition type in the `Condition` class. (`src/flux/condition.py`)
     ```python
     condition_dict = {
         ...
         "your_condition_type": your_condition_id_number, # Add your condition type here
     }
     ...
-    if self.condition_type in [
+    if condition_type in [
         ...
         "your_condition_type", # Add your condition type here
     ]:
@@ -108,6 +108,22 @@ You can customize your own task by constructing a new dataset and modifying the 
         ...
         test_list.append((condition_img, [0, 0], "A beautiful vase on a table."))
     ```
+
+4. **Import relevant dataset in the training script**
+   Update the file in the following section. (`src/train/train.py`)
+   ```python
+    from .data import (
+        ImageConditionDataset,
+        Subject200KDateset,
+        MyDataset
+    )
+    ...
+   
+    # Initialize dataset and dataloader
+    if training_config["dataset"]["type"] == "your_condition_type":
+       ...
+   ```
+   
 </details>
 
 ## Hardware requirement
