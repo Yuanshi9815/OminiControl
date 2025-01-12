@@ -13,7 +13,7 @@ train:
   save_interval: 1000
   sample_interval: 100
   max_steps: 15000
-  gradient_checkpointing: true
+  gradient_checkpointing: false
   save_path: "runs"
 
   condition_type: "cartoon"
