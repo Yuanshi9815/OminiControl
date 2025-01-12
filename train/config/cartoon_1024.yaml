@@ -10,10 +10,10 @@ train:
   batch_size: 1
   accumulate_grad_batches: 1
   dataloader_workers: 5
-  save_interval: 100
-  sample_interval: 10
-  max_steps: 100
-  gradient_checkpointing: false
+  save_interval: 1000
+  sample_interval: 100
+  max_steps: 15000
+  gradient_checkpointing: true
   save_path: "runs"
 
   condition_type: "cartoon"
