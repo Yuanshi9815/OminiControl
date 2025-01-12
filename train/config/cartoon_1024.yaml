@@ -38,7 +38,7 @@ train:
   optimizer:
     type: "Prodigy"
     params:
-      lr: 4
+      lr: 2
       use_bias_correction: true
       safeguard_warmup: true
       weight_decay: 0.01
