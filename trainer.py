@@ -183,7 +183,7 @@ def clean_up():
         shutil.rmtree(OUTPUT_DIR)
 
 
-train(
-  config_path="train/config/cartoon_1024.yaml",
-  lora_rank=1,
-)  # Run the training
+# train(
+#   config_path="train/config/cartoon_1024.yaml",
+#   lora_rank=1,
+# )  # Run the training
