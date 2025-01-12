@@ -292,7 +292,7 @@ class CartoonDataset(Dataset):
         ).convert("RGB")
 
         # Get the description
-        description = data.get("description", f"Photo of a {description[tag]} cartoon character in a white background. Character is facing {target_description['facing_direction']}. Character pose is {target_description['pose']} and has {target_description['expression']} expression.")
+        description = data.get("description", f"Photo of a {description[tag]} cartoon character in a white background. Character is facing {target_description['facing_direction']}. Character pose is {target_description['pose']}.")
 
         # Randomly drop text or image
         drop_text = random.random() < self.drop_text_prob
@@ -311,7 +311,7 @@ class CartoonDataset(Dataset):
             "condition_type": self.condition_type,
             "description": description,
             # 16 is the downscale factor of the image
-            "position_delta": np.array([0, -32]),
+            "position_delta": np.array([0, -16]),
         }
 
 
