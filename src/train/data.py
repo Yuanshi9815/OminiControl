@@ -258,6 +258,31 @@ class CartoonDataset(Dataset):
         # Tag
         tag = data['tags'][0]
 
+        target_description = data['target_description']
+
+        description = {
+            "lion": "lion like animal",
+            "bear": "bear like animal",
+            "gorilla": "gorilla like animal",
+            "dog": "dog like animal",
+            "elephant": "elephant like animal",
+            "eagle": "eagle like bird",
+            "tiger": "tiger like animal",
+            "owl": "owl like bird",
+            "woman": "woman",
+            "parrot": "parrot like bird",
+            "mouse": "mouse like animal
+            "man": "man",
+            "pigeon": "pigeon like bird"
+            "girl": "girl",
+            "panda": "panda like animal",
+            "crocodile": "crocodile like animal",
+            "rabbit": "rabbit like animal",
+            "boy": "boy",
+            "monkey": "monkey like animal",
+            "cat": "cat like animal"
+        }
+
         # Resize the image
         condition_img = condition_img.resize(
             (self.condition_size, self.condition_size)
@@ -267,7 +292,7 @@ class CartoonDataset(Dataset):
         ).convert("RGB")
 
         # Get the description
-        description = data.get("description", f"Photo of a {tag} cartoon character in a white background.")
+        description = data.get("description", f"Photo of a {description[tag]} cartoon character in a white background. The character is facing {target_description['facing_direction']}. Pose of the character is {target_description['pose']}. The character has expression - {target_description['expression']}.")
 
         # Randomly drop text or image
         drop_text = random.random() < self.drop_text_prob
