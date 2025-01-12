@@ -7,6 +7,10 @@ import time
 from huggingface_hub import login
 from datasets import load_dataset
 
+HF_TOKEN = os.environ.get("HF_TOKEN")
+
+login(token=HF_TOKEN)
+
 
 from .data import (
     ImageConditionDataset,
