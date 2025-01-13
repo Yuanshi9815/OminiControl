@@ -55,7 +55,7 @@ class Predictor(BasePredictor):
         ),
         image: Path = Input(description="Input image"),
         num_inference_steps: int = Input(
-            description="Number of denoising steps", ge=1, le=500, default=50
+            description="Number of denoising steps", ge=1, le=50, default=30
         ),
         guidance_scale: float = Input(
             description="Scale for classifier-free guidance", ge=1, le=20, default=7.5
