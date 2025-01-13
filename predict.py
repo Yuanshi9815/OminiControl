@@ -71,8 +71,8 @@ class Predictor(BasePredictor):
         seed: int = Input(
             description="Random seed. Leave blank to randomize the seed", default=None
         ),
-        position_delta: list = Input(
-            description="Position delta for the condition", default=[0, -16]
+        position_delta: int = Input(
+            description="Position delta for the condition", default=-16
         ),
     ) -> Path:
         """Run a single prediction on the model"""
@@ -103,7 +103,7 @@ class Predictor(BasePredictor):
 
         seed_everything(seed)
         generator = torch.Generator("cuda").manual_seed(seed)
-        condition = Condition('cartoon', condition=image, position_delta=position_delta)
+        condition = Condition('cartoon', condition=image, position_delta=[0, position_delta])
 
         result_img = generate(
             self.pipe,
