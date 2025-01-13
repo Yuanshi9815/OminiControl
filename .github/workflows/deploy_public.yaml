@@ -1,4 +1,4 @@
-name: Push to THeFluxTrain public Replicate
+name: Push to TheFluxTrain public Replicate
  
 on:
   push:
