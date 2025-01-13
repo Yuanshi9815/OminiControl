@@ -84,7 +84,7 @@ class Predictor(BasePredictor):
 
         seed_everything(seed)
         generator = torch.Generator("cuda").manual_seed(seed)
-        condition = Condition(model.split("_")[0], image)
+        condition = Condition('cartoon', image)
 
         result_img = generate(
             self.pipe,
