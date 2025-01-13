@@ -3,7 +3,7 @@ name: Push to TheFluxTrain public Replicate
 on:
   push:
     branches:
-      - main
+      - fluxtrain
  
 jobs:
   push_to_replicate:
