@@ -21,6 +21,8 @@ ESRGAN_WEIGHTS_PATH = Path("weights/RealESRGAN_x4.pth")
 
 upscale_factor = 2
 
+device = 'cuda'
+
 def download_base_weights(url: str, dest: Path):
     start = time.time()
     print("downloading url: ", url)
@@ -39,7 +41,7 @@ class Predictor(BasePredictor):
         self.pipe = FluxPipeline.from_pretrained(
             "FLUX.1-dev",
             torch_dtype=torch.bfloat16,
-        ).to("cuda")
+        ).to(device)
 
         self.upscaler = RealESRGAN(device, scale=upscale_factor)
         self.upscaler.load_weights(ESRGAN_WEIGHTS_PATH, download=True)
