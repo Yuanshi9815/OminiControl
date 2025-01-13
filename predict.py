@@ -68,23 +68,34 @@ class Predictor(BasePredictor):
             description="LoRA weight to use.",
             default="pytorch_lora_weights.safetensors"
         ),
-        height: int = Input(
-            description="Height of the output image", default=512
-        ),
-        width: int = Input(
-            description="Width of the output image", default=512
-        ),
         seed: int = Input(
             description="Random seed. Leave blank to randomize the seed", default=None
+        ),
+        position_delta: list = Input(
+            description="Position delta for the condition", default=[0, -16]
         ),
     ) -> Path:
         """Run a single prediction on the model"""
 
         print(f"Generating image with prompt: {prompt}")
+        height = 512
+        width = 512
 
         self.pipe.load_lora_weights(lora, weight_name=weight_name, adapter_name="cartoon")
 
-        image = Image.open(str(image)).convert("RGB").resize((width, height))
+        image = Image.open(str(image)).convert("RGB")
+
+        # Crop the image to a square
+        _width, _height = image.size
+        if _width != _height:
+            size = min(_width, _height)
+            left = (_width - size) // 2
+            top = (_height - size) // 2
+            right = (_width + size) // 2
+            bottom = (_height + size) // 2
+            image = image.crop((left, top, right, bottom))
+        
+        image = image.resize((width, height))
 
         if seed is None:
             seed = int.from_bytes(os.urandom(2), "big")
@@ -92,7 +103,7 @@ class Predictor(BasePredictor):
 
         seed_everything(seed)
         generator = torch.Generator("cuda").manual_seed(seed)
-        condition = Condition('cartoon', condition=image, position_delta=[0, -16])
+        condition = Condition('cartoon', condition=image, position_delta=position_delta)
 
         result_img = generate(
             self.pipe,
