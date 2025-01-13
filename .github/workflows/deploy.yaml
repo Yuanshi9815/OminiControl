@@ -3,7 +3,7 @@ name: Push to Replicate
 on:
   push:
     branches:
-      - main-no
+      - main
  
 jobs:
   push_to_replicate:
