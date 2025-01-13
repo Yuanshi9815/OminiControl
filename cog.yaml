@@ -30,6 +30,7 @@ build:
     - wandb
     - Pillow==9.5.0
     - accelerate==0.33.0
+    - py_real_esrgan
 
   run:
     - curl -o /usr/local/bin/pget -L "https://github.com/replicate/pget/releases/download/v0.6.0/pget_linux_x86_64" && chmod +x /usr/local/bin/pget

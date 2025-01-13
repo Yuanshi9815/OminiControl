@@ -10,13 +10,16 @@ from PIL import Image
 from diffusers.pipelines import FluxPipeline
 from src.flux.condition import Condition
 from src.flux.generate import generate, seed_everything
+from py_real_esrgan.model import RealESRGAN
 
 
 MODEL_URL_DEV = (
     "https://weights.replicate.delivery/default/black-forest-labs/FLUX.1-dev/files.tar"
 )
 FLUX_DEV_PATH = Path("FLUX.1-dev")
+ESRGAN_WEIGHTS_PATH = Path("weights/RealESRGAN_x4.pth")
 
+upscale_factor = 2
 
 def download_base_weights(url: str, dest: Path):
     start = time.time()
@@ -38,7 +41,8 @@ class Predictor(BasePredictor):
             torch_dtype=torch.bfloat16,
         ).to("cuda")
 
-        self.pipe.load_lora_weights('saquiboye/oye-cartoon', weight_name='pytorch_lora_weights.safetensors', adapter_name="cartoon")
+        self.upscaler = RealESRGAN(device, scale=upscale_factor)
+        self.upscaler.load_weights(ESRGAN_WEIGHTS_PATH, download=True)
 
 
     def predict(
@@ -76,6 +80,8 @@ class Predictor(BasePredictor):
 
         print(f"Generating image with prompt: {prompt}")
 
+        self.pipe.load_lora_weights(lora, weight_name=weight_name, adapter_name="cartoon")
+
         image = Image.open(str(image)).convert("RGB").resize((width, height))
 
         if seed is None:
@@ -97,7 +103,9 @@ class Predictor(BasePredictor):
             generator=generator,
         ).images[0]
 
-        # self.pipe.delete_adapters('cartoon')
+        result_img = self.upscaler.predict(result_img)
+
+        self.pipe.delete_adapters('cartoon')
         out_path = "/tmp/out.png"
         result_img.save(out_path)
         return Path(out_path)
