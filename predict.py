@@ -38,12 +38,14 @@ class Predictor(BasePredictor):
             torch_dtype=torch.bfloat16,
         ).to("cuda")
 
+        self.pipe.load_lora_weights('saquiboye/oye-cartoon', weight_name='pytorch_lora_weights.safetensors', adapter_name="cartoon")
+
 
     def predict(
         self,
         prompt: str = Input(
             description="Input prompt.",
-            default="On Christmas evening, on a crowded sidewalk, this item sits on the road, covered in snow and wearing a Christmas hat.",
+            default="A girl cartoon character in a white background. She is looking right, and running.",
         ),
         image: Path = Input(description="Input image"),
         num_inference_steps: int = Input(
@@ -72,9 +74,7 @@ class Predictor(BasePredictor):
     ) -> Path:
         """Run a single prediction on the model"""
 
-        self.pipe.load_lora_weights(lora, weight_name=weight_name, adapter_name="cartoon")
-        self.pipe.set_adapters("cartoon")
-        self.pipe.to("cuda")
+        print(f"Generating image with prompt: {prompt}")
 
         image = Image.open(str(image)).convert("RGB").resize((width, height))
 
@@ -97,7 +97,7 @@ class Predictor(BasePredictor):
             generator=generator,
         ).images[0]
 
-        self.pipe.delete_adapters('cartoon')
+        # self.pipe.delete_adapters('cartoon')
         out_path = "/tmp/out.png"
         result_img.save(out_path)
         return Path(out_path)
