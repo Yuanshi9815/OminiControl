@@ -54,11 +54,11 @@ class Predictor(BasePredictor):
         ),
         lora: str = Input(
             description="LoRA model to use.",
-            default=None
+            default="saquiboye/oye-cartoon"
         ),
         weight_name: str = Input(
             description="LoRA weight to use.",
-            default=None
+            default="pytorch_lora_weights.safetensors"
         ),
         height: int = Input(
             description="Height of the output image", default=512
