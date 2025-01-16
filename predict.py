@@ -74,12 +74,25 @@ class Predictor(BasePredictor):
         position_delta: int = Input(
             description="Position delta for the condition", default=-16
         ),
+        width: int = Input(
+            description="Width of the output image", default=None
+        ),
+        height: int = Input(
+            description="Height of the output image", default=None
+        ),
     ) -> Path:
         """Run a single prediction on the model"""
 
         print(f"Generating image with prompt: {prompt}")
-        height = 512
-        width = 512
+
+        can_crop = False
+        if height is None or width is None:
+          height = 512
+          width = 512
+          can_crop = True
+        else:
+          height = int((height//16) * 16)
+          width = int((width//16) * 16)
 
         self.pipe.load_lora_weights(lora, weight_name=weight_name, adapter_name="cartoon")
 
@@ -87,7 +100,7 @@ class Predictor(BasePredictor):
 
         # Crop the image to a square
         _width, _height = image.size
-        if _width != _height:
+        if _width != _height and can_crop:
             size = min(_width, _height)
             left = (_width - size) // 2
             top = (_height - size) // 2
