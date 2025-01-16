@@ -60,6 +60,9 @@ class Predictor(BasePredictor):
         guidance_scale: float = Input(
             description="Scale for classifier-free guidance", ge=1, le=20, default=7.5
         ),
+        image_strength: float = Input(
+            description="Strength of the image", ge=0, le=1, default=1
+        ),
         lora: str = Input(
             description="LoRA model to use.",
             default="saquiboye/oye-cartoon"
@@ -127,6 +130,7 @@ class Predictor(BasePredictor):
             height=height,
             width=width,
             generator=generator,
+            condition_scale=image_strength,
         ).images[0]
 
         result_img = self.upscaler.predict(result_img)
