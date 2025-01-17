@@ -16,6 +16,7 @@ condition_dict = {
     "depth_pred": 8,
     "fill": 9,
     "sr": 10,
+    "cartoon": 11,
 }
 
 
@@ -73,6 +74,8 @@ class Condition(object):
             return condition_image
         elif condition_type == "fill":
             return raw_img.convert("RGB")
+        elif condition_type == "cartoon":
+            return raw_img.convert("RGB")
         return self.condition
 
     @property
@@ -102,6 +105,7 @@ class Condition(object):
             "depth_pred",
             "fill",
             "sr",
+            "cartoon"
         ]:
             tokens, ids = encode_images(pipe, self.condition)
         else:
