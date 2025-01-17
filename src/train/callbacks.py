@@ -189,6 +189,13 @@ class TrainingCallback(L.Callback):
                 .convert("RGB")
             )
             test_list.append((condition_img, [0, -16], "A beautiful vase on a table."))
+        elif condition_type == "cartoon":
+            condition_img = (
+                Image.open("assets/cartoon_boy.png")
+                .resize((condition_size, condition_size))
+                .convert("RGB")
+            )
+            test_list.append((condition_img, [0, -16], "A cartoon character in a white background. He is looking right, and running."))
         else:
             raise NotImplementedError
 

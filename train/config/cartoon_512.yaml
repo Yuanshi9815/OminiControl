@@ -1,0 +1,44 @@
+flux_path: "black-forest-labs/FLUX.1-dev"
+dtype: "bfloat16"
+
+model:
+  union_cond_attn: true
+  add_cond_attn: false
+  latent_lora: false
+
+train:
+  batch_size: 1
+  accumulate_grad_batches: 1
+  dataloader_workers: 8
+  save_interval: 1000
+  sample_interval: 100
+  max_steps: 15000
+  gradient_checkpointing: false
+  save_path: "runs"
+
+  condition_type: "cartoon"
+  dataset:
+    type: "cartoon"
+    condition_size: 512
+    target_size: 512
+    image_size: 512
+    padding: 0
+    drop_text_prob: 0.1
+    drop_image_prob: 0.0
+
+  wandb:
+    project: "OminiControl"
+
+  lora_config:
+    r: 4
+    lora_alpha: 4
+    init_lora_weights: "gaussian"
+    target_modules: "(.*x_embedder|.*(?<!single_)transformer_blocks\\.[0-9]+\\.norm1\\.linear|.*(?<!single_)transformer_blocks\\.[0-9]+\\.attn\\.to_k|.*(?<!single_)transformer_blocks\\.[0-9]+\\.attn\\.to_q|.*(?<!single_)transformer_blocks\\.[0-9]+\\.attn\\.to_v|.*(?<!single_)transformer_blocks\\.[0-9]+\\.attn\\.to_out\\.0|.*(?<!single_)transformer_blocks\\.[0-9]+\\.ff\\.net\\.2|.*single_transformer_blocks\\.[0-9]+\\.norm\\.linear|.*single_transformer_blocks\\.[0-9]+\\.proj_mlp|.*single_transformer_blocks\\.[0-9]+\\.proj_out|.*single_transformer_blocks\\.[0-9]+\\.attn.to_k|.*single_transformer_blocks\\.[0-9]+\\.attn.to_q|.*single_transformer_blocks\\.[0-9]+\\.attn.to_v|.*single_transformer_blocks\\.[0-9]+\\.attn.to_out)"
+
+  optimizer:
+    type: "Prodigy"
+    params:
+      lr: 2
+      use_bias_correction: true
+      safeguard_warmup: true
+      weight_decay: 0.01
