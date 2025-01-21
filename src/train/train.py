@@ -111,7 +111,7 @@ def main():
             drop_text_prob=training_config["dataset"]["drop_text_prob"],
             drop_image_prob=training_config["dataset"]["drop_image_prob"],
         )
-    elif training_config["dataset"]["type"] == "subject"::
+    elif training_config["dataset"]["type"] == "cartoon"::
         dataset = load_dataset("saquiboye/oye-cartoon", split="train")
         dataset = CartoonDataset(
             dataset,
