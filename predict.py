@@ -4,13 +4,15 @@
 import os
 import subprocess
 import time
-from cog import BasePredictor, Input, Path
+from cog import BasePredictor, Input, Path, Secret
 import torch
 from PIL import Image
 from diffusers.pipelines import FluxPipeline
 from src.flux.condition import Condition
 from src.flux.generate import generate, seed_everything
 from py_real_esrgan.model import RealESRGAN
+
+from huggingface_hub import login, hf_hub_download
 
 
 MODEL_URL_DEV = (
@@ -83,6 +85,9 @@ class Predictor(BasePredictor):
         height: int = Input(
             description="Height of the output image", default=None
         ),
+        hf_token: str = Secret(
+            description="Hugging Face API token", default=None
+        ),
     ) -> Path:
         """Run a single prediction on the model"""
 
@@ -96,6 +101,9 @@ class Predictor(BasePredictor):
         else:
           height = int((height//16) * 16)
           width = int((width//16) * 16)
+
+        if hf_token:
+            login(token=hf_token)
 
         self.pipe.load_lora_weights(lora, weight_name=weight_name, adapter_name="cartoon")
 
