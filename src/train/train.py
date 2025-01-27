@@ -134,9 +134,34 @@ def main():
         num_workers=training_config["dataloader_workers"],
     )
 
+    lora_path = None
+
+    if training_config['resume_training_from_last_checkpoint']:
+        # get latest directory in training_config['save_path'], ignore hidden files
+        all_training_sessions = [d for d in os.listdir(training_config['save_path']) if not d.startswith('.')]
+        all_training_sessions.sort(reverse=True)
+        last_training_session = all_training_sessions[0]
+        if os.path.exists(f"{training_config['save_path']}/{last_training_session}/ckpt"):
+            ckpt_paths = [d for d in os.listdir(f"{training_config['save_path']}/{last_training_session}/ckpt") if not d.startswith('.')]
+            ckpt_paths.sort(reverse=True)
+            lora_path = f"{training_config['save_path']}/{last_training_session}/ckpt/{ckpt_paths[0]}"
+            print(f"Resuming training from {lora_path}")
+        else:
+            print("No checkpoint found. Training without LoRA weights.")
+
+    elif training_config['resume_training_from_checkpoint_path'] != "":
+        _lora_path = training_config['resume_training_from_checkpoint_path']
+        # Check if the path exists
+        if os.path.exists(_lora_path):
+            lora_path = _lora_path
+            print(f"Training with LoRA weights from {_lora_path}")
+        else:
+            print(f"Path {_lora_path} does not exist. Training without LoRA weights.")
+
     # Initialize model
     trainable_model = OminiModel(
         flux_pipe_id=config["flux_path"],
+        lora_path = lora_path,
         lora_config=training_config["lora_config"],
         device=f"cuda",
         dtype=getattr(torch, config["dtype"]),

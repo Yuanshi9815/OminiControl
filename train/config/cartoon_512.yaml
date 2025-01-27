@@ -17,6 +17,10 @@ train:
   save_path: "runs"
 
   condition_type: "cartoon"
+  resume_training_from_last_checkpoint: false
+  # Ignored if resume_training_from_last_checkpoint = true. 
+  # Ignored if path does not exist.
+  resume_training_from_checkpoint_path: "runs/20250127-114531/ckpt/1000"
   dataset:
     type: "cartoon"
     condition_size: 512
