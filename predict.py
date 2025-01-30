@@ -85,13 +85,15 @@ class Predictor(BasePredictor):
         height: int = Input(
             description="Height of the output image", default=None
         ),
-        hf_token: str = Secret(
+        hf_token: Secret = Secret(
             description="Hugging Face API token", default=None
         ),
     ) -> Path:
         """Run a single prediction on the model"""
 
         print(f"Generating image with prompt: {prompt}")
+
+        hf_token = hf_token.get_secret_value() if hf_token else None
 
         can_crop = False
         if height is None or width is None:

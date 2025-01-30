@@ -3,7 +3,7 @@ name: Push to Replicate
 on:
   push:
     branches:
-      - fluxtrain
+      - fluxtrain-no
  
 jobs:
   push_to_replicate:
