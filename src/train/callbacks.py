@@ -86,6 +86,7 @@ class TrainingCallback(L.Callback):
                     0
                 ],  # Use the condition type from the current batch
             )
+            print("saving model: ", f"{self.save_path}/{self.run_name}/output/lora_{self.total_steps}.safetensors")
 
     @torch.no_grad()
     def generate_a_sample(

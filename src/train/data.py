@@ -4,6 +4,7 @@ import numpy as np
 from torch.utils.data import Dataset
 import torchvision.transforms as T
 import random
+import os
 
 
 class Subject200KDataset(Dataset):
@@ -286,7 +287,6 @@ class CartoonDataset(Dataset):
             (self.target_size, self.target_size)
         ).convert("RGB")
 
-        # Process datum to create description
         description = data.get("description", f"Photo of a {description[tag]} cartoon character in a white background. Character is facing {target_description['facing_direction']}. Character pose is {target_description['pose']}.")
 
         # Randomly drop text or image

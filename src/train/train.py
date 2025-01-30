@@ -4,8 +4,13 @@ import lightning as L
 import yaml
 import os
 import time
-
+from huggingface_hub import login
 from datasets import load_dataset
+
+# HF_TOKEN = os.environ.get("HF_TOKEN")
+
+# login(token=HF_TOKEN)
+
 
 from .data import (
     ImageConditionDataset,
@@ -15,6 +20,7 @@ from .data import (
 from .model import OminiModel
 from .callbacks import TrainingCallback
 
+torch.set_float32_matmul_precision('medium')
 
 def get_rank():
     try:
@@ -124,7 +130,18 @@ def main():
             drop_image_prob=training_config["dataset"]["drop_image_prob"],
         )
     else:
-        raise NotImplementedError
+        dataset = load_dataset("saquiboye/oye-cartoon", split="train")
+        dataset = CartoonDataset(
+            dataset,
+            condition_size=training_config["dataset"]["condition_size"],
+            target_size=training_config["dataset"]["target_size"],
+            image_size=training_config["dataset"]["image_size"],
+            padding=training_config["dataset"]["padding"],
+            condition_type=training_config["condition_type"],
+            drop_text_prob=training_config["dataset"]["drop_text_prob"],
+            drop_image_prob=training_config["dataset"]["drop_image_prob"],
+        )
+        # raise NotImplementedError
 
     print("Dataset length:", len(dataset))
     train_loader = DataLoader(
