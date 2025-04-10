@@ -1,6 +1,6 @@
 from peft.tuners.tuners_utils import BaseTunerLayer
 from typing import List, Any, Optional, Type
-from condition import condition_dict
+from .condition import condition_dict
 
 class enable_lora:
     def __init__(self, lora_modules: List[BaseTunerLayer], activated: bool) -> None:
