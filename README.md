@@ -4,7 +4,7 @@
 <img src='./assets/demo/demo_this_is_omini_control.jpg' width='100%' />
 <br>
 
-<a href="https://huggingface.co/Yuanshi/OminiControl"><img src="https://img.shields.io/badge/🤗_HuggingFace-Model-ffbd45.svg" alt="HuggingFace"></a>
+<a href="https://huggingface.co/Yuanshi/OminiControl"><img src="https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2FYuanshi%2FOminiControl%3Fexpand%255B%255D%3DdownloadsAllTime&amp;search=%22downloadsAllTime%22%3A%5Cs%2A%28%5Cd%2B%29%28%5Cd%29%5Cd%7B2%7D&amp;replace=Model%20%28%241.%242k%20downloads%29&amp;label=%F0%9F%A4%97%20HuggingFace&amp;color=ffbd45" alt="HuggingFace Model Downloads" title="All-time model downloads on Hugging Face"></a>
 <a href="https://huggingface.co/spaces/Yuanshi/OminiControl"><img src="https://img.shields.io/badge/🤗_HuggingFace-Demo-ffbd45.svg" alt="HuggingFace"></a>
 <a href="https://huggingface.co/spaces/Yuanshi/OminiControl_Art"><img src="https://img.shields.io/badge/🤗_HuggingFace-Demo2-ffbd45.svg" alt="HuggingFace"></a>
 <a href="https://github.com/Yuanshi9815/Subjects200K"><img src="https://img.shields.io/badge/GitHub-Dataset-blue.svg?logo=github&" alt="GitHub"></a>
